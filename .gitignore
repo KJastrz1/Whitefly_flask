@@ -1,0 +1,54 @@
+node_modules/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+info.txt
+# Virtual environment
+.venv/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# Database
+*.db
+
+# Compiled Python files
+*.pyc
+
+# Flask migration
+/migrations/
+
+# Local development settings
+instance/
+
+# IDE settings
+.vscode/
+
+# Compiled files
+*.pyc
+*.pyo
+*.pyd
+*.pyz
+*.pyw
+
+# Temporary files
+*.bak
+*.swp
+*~
+
+# Package files
+*.zip
+*.egg-info/
+
+# Configuration files
+*.cnf
+*.ini
+config.py
+*.pem
+*.wsgi
+*.pdf
