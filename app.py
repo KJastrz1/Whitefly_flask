@@ -6,19 +6,25 @@ from dotenv import load_dotenv
 from celery_config import make_celery
 
 load_dotenv()
+# print(f"DATABASE_URL: {os.environ.get('DATABASE_URL')}")
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["CELERY_BROKER_URL"] = os.environ.get("CELERY_BROKER_URL")
+app.config["broker_url"] = os.environ.get("CELERY_BROKER_URL")
 app.config["result_backend"] = os.environ.get("CELERY_RESULT_BACKEND")
 app.config["broker_connection_retry_on_startup"] = True
-app.config["DEBUG"] = os.environ.get("DEBUG") == 'True'
+app.config["DEBUG"] = os.environ.get("DEBUG") == "True"
+
+# if app.config["DEBUG"]:
+#     print("activating debug mode for flask")
+# print(f"Database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 celery = make_celery(app)
+
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -27,12 +33,15 @@ class Message(db.Model):
     def __repr__(self):
         return f"Message('{self.content}')"
 
+
 import tasks
+
 
 @app.route("/")
 def index():
     messages = Message.query.all()
     return render_template("index.html", messages=messages)
+
 
 @app.route("/sync-form", methods=("GET", "POST"))
 def sync_form():
@@ -45,7 +54,8 @@ def sync_form():
             db.session.add(message)
             db.session.commit()
             return redirect(url_for("index"))
-    return render_template("form.html", page_title="Sync Form")
+    return render_template("form.html")
+
 
 @app.route("/async-form", methods=("GET", "POST"))
 def async_form():
@@ -53,10 +63,12 @@ def async_form():
         content = request.form["content"]
         if not content:
             flash("Content is required!")
-        else:
-            tasks.process_message.apply_async(args=[content])
+        else:            
+            task = tasks.process_message.apply_async(args=[content], queue='default')
+            print("id taska", task.id)
             return redirect(url_for("index"))
-    return render_template("form.html", page_title="Async Form")
+    return render_template("async_form.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
