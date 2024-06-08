@@ -4,7 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-@celery.task
+@celery.task(queue='default')
 def process_message(content):
     print(f"Processing message: {content}")
     logger.info("Entering process_message task")
