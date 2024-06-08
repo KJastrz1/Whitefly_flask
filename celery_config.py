@@ -11,7 +11,6 @@ def make_celery(app):
     celery.conf.update(app.config)
 
     if app.config["DEBUG"]:
-        # print("activating debug mode for celery")
         celery_log_level = "DEBUG"
     else:
         celery_log_level = "INFO"
