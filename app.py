@@ -2,13 +2,13 @@ from flask import Flask, Response, render_template, request, redirect, flash, ur
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
+from asgiref.wsgi import WsgiToAsgi
 from dotenv import load_dotenv
 from celery_config import make_celery
 
 load_dotenv()
 
 app = Flask(__name__)
-asgi_app = ASGI(app)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -18,6 +18,7 @@ app.config["broker_connection_retry_on_startup"] = True
 app.config["DEBUG"] = os.environ.get("DEBUG") == "True"
 app.config["SERVER_TYPE"] = os.environ.get("SERVER_TYPE")
 
+asgi_app = WsgiToAsgi(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 celery = make_celery(app)
