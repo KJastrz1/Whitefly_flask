@@ -44,7 +44,6 @@ instance/
 
 # Configuration files
 *.cnf
-*.ini
 config.py
 *.pem
 *.wsgi
