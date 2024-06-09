@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 from celery_config import make_celery
 
 load_dotenv()
-# print(f"DATABASE_URL: {os.environ.get('DATABASE_URL')}")
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
@@ -17,9 +16,6 @@ app.config["result_backend"] = os.environ.get("CELERY_RESULT_BACKEND")
 app.config["broker_connection_retry_on_startup"] = True
 app.config["DEBUG"] = os.environ.get("DEBUG") == "True"
 
-# if app.config["DEBUG"]:
-#     print("activating debug mode for flask")
-# print(f"Database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
