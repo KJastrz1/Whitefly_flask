@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
     nginx \
     && rm -rf /var/lib/apt/lists/*
 
-
 RUN apt-get update && apt-get install -y redis-server && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -23,6 +22,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 RUN echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
 
+RUN flask db upgrade
 
 CMD redis-server & \
     celery -A app.celery worker --loglevel=info & \

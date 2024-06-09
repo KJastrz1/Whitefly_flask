@@ -20,9 +20,6 @@ info.txt
 # Compiled Python files
 *.pyc
 
-# Flask migration
-/migrations/
-
 # Local development settings
 instance/
 
