@@ -32,6 +32,10 @@ class Message(db.Model):
 
 import tasks
 
+@app.route('/loaderio-4dd53eb5634fc0f6eebad89a8ca46c76/')
+def verify():
+    token = "loaderio-4dd53eb5634fc0f6eebad89a8ca46c76"
+    return Response(token, mimetype='text/plain')
 
 @app.route("/")
 def index():
