@@ -22,6 +22,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 RUN echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
 
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
 RUN flask db upgrade
 
 CMD redis-server & \
