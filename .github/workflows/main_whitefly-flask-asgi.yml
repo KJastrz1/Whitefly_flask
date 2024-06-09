@@ -23,17 +23,15 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://ghcr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_ec7b221bc9ff4d5db69e86a149840066 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_4396fe72f336412099aa52fd0316e367 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_bb07e5f0de8f43c28d88d85c77947782 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_f5eb3e4b7f2c45e5bac95f59b72cbe25 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_ec7b221bc9ff4d5db69e86a149840066 }}/whitefly-flask-asgi:${{ github.sha }}
+        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_bb07e5f0de8f43c28d88d85c77947782 }}/whitefly-flask-asgi:${{ github.sha }}
         file: ./Dockerfile
-        build-args: |
-          DATABASE_URL=${{ secrets.DATABASE_URL }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,5 +47,5 @@ jobs:
       with:
         app-name: 'whitefly-flask-asgi'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_ee86d71218c841eabf44dad43b20c821 }}
-        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_ec7b221bc9ff4d5db69e86a149840066 }}/whitefly-flask-asgi:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_a71c75bd93b643a2a10921cbf5e17a16 }}
+        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_bb07e5f0de8f43c28d88d85c77947782 }}/whitefly-flask-asgi:${{ github.sha }}'
