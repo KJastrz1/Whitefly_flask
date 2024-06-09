@@ -27,6 +27,7 @@
 </head>
 <body>
     <nav>
+        <h1>Flask app - {{ server_type }}</h1>
         <a href="{{ url_for('index') }}">Home</a>
         <a href="{{ url_for('sync_form') }}">Sync form</a>
         <a href="{{ url_for('async_form') }}">Async form</a>  

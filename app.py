@@ -15,7 +15,7 @@ app.config["broker_url"] = os.environ.get("CELERY_BROKER_URL")
 app.config["result_backend"] = os.environ.get("CELERY_RESULT_BACKEND")
 app.config["broker_connection_retry_on_startup"] = True
 app.config["DEBUG"] = os.environ.get("DEBUG") == "True"
-
+app.config["SERVER_TYPE"] = os.environ.get("SERVER_TYPE")
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -36,7 +36,8 @@ import tasks
 @app.route("/")
 def index():
     messages = Message.query.all()
-    return render_template("index.html", messages=messages)
+    server_type = os.environ.get("SERVER_TYPE")
+    return render_template("index.html", messages=messages, server_type=server_type)
 
 
 @app.route("/sync-form", methods=("GET", "POST"))

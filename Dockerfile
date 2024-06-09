@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN pip install gunicorn celery
+RUN pip install uwsgi uvicorn celery
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
@@ -26,7 +26,7 @@ ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
 RUN flask db upgrade
 
-CMD redis-server & \
-    celery -A app.celery worker --loglevel=info & \
-    gunicorn --workers 4 --bind 0.0.0.0:8000 app:app & \
-    nginx -g "daemon off;"
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+CMD /entrypoint.sh
