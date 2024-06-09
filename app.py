@@ -8,6 +8,7 @@ from celery_config import make_celery
 load_dotenv()
 
 app = Flask(__name__)
+asgi_app = ASGI(app)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

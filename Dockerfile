@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN pip install uwsgi uvicorn celery
+RUN pip install uwsgi uvicorn celery flask-asgi
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
