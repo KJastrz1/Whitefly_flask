@@ -32,6 +32,8 @@ jobs:
         push: true
         tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_ec7b221bc9ff4d5db69e86a149840066 }}/whitefly-flask-asgi:${{ github.sha }}
         file: ./Dockerfile
+        build-args: |
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
 
   deploy:
     runs-on: ubuntu-latest
