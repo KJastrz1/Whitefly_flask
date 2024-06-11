@@ -34,9 +34,9 @@ class Message(db.Model):
 
 import tasks
 
-@app.route('/loaderio-4e1ee4cd84aa3c311f271c194ce76061/')
+@app.route('/loaderio-607f75e455df2b463153a7f3d87064a2/')
 def verify():
-    token = "loaderio-4e1ee4cd84aa3c311f271c194ce76061"
+    token = "loaderio-607f75e455df2b463153a7f3d87064a2"
     return Response(token, mimetype='text/plain')
 
 @app.route("/")
